@@ -26,7 +26,17 @@ def calculate_tfidf(texts: List[str]) -> pd.DataFrame:
         0  0.000000  0.579739  0.000000  0.579739  0.447214
         1  0.652491  0.000000  0.652491  0.000000  0.385372
     """
-    pass
+    if not isinstance(texts, list):
+        raise TypeError("Input texts must be a list")
+    if not texts:
+        raise ValueError("Input texts cannot be empty")
+    if not all(isinstance(text, str) for text in texts):
+        raise ValueError("All texts must be strings")
+
+    vectorizer = TfidfVectorizer()
+    matrix = vectorizer.fit_transform(texts)
+
+    df = pd.DataFrame(matrix.toarray(), columns=vectorizer.get_feature_names_out())
     return df
 
 

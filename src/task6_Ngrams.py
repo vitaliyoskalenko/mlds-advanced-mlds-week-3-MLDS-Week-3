@@ -24,7 +24,17 @@ def generate_ngrams(text: str, n: int) -> List[Tuple[str, ...]]:
         >>> generate_ngrams("I love NLP", 2)
         [('I', 'love'), ('love', 'NLP')]
     """
-    pass
+    if not isinstance(text, str):
+        raise TypeError("Text must be a string")
+    if not isinstance(n, int) or isinstance(n, bool):
+        raise TypeError("N must be an integer")
+    if not text.strip():
+        raise ValueError("Text cannot be empty")
+    if n < 1:
+        raise ValueError("N must be at least 1")
+
+    tokens = word_tokenize(text)
+    n_grams = list(ngrams(tokens, n))
     return n_grams
 
 
@@ -48,7 +58,12 @@ def count_ngrams(ngrams_list: List[Tuple[str, ...]]) -> Dict[Tuple[str, ...], in
         >>> count_ngrams(ngrams_list)
         {('I', 'love'): 2, ('love', 'NLP'): 1}
     """
-    pass
+    if not isinstance(ngrams_list, list):
+        raise TypeError("N-grams list must be a list")
+    if not ngrams_list:
+        raise ValueError("N-grams list cannot be empty")
+
+    ngram_counts = Counter(ngrams_list)
     return dict(ngram_counts)
 
 
